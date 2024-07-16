@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "254951943422",
+    "project_id": "yummyinn-91313",
+    "storage_bucket": "yummyinn-91313.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:254951943422:android:f16ede6ac2540d1b2909af",
+        "android_client_info": {
+          "package_name": "com.areeb.foodapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "254951943422-npi85g3a2fkgo8hs0q73nviki78kb5ir.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.areeb.foodapp",
+            "certificate_hash": "9ad22f2a8e0dbe5352e36190320e17fa4b1997ef"
+          }
+        },
+        {
+          "client_id": "254951943422-hnlu9fnks0p613256hpjv0vj50dnlv4g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDHe6_I63zShsRQBKPr2aPhg044OvbUSSc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "254951943422-hnlu9fnks0p613256hpjv0vj50dnlv4g.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
