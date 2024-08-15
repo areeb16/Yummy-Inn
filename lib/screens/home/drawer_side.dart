@@ -8,17 +8,20 @@ import 'package:food_app/screens/wishList/wish_list.dart';
 
 class DrawerSide extends StatefulWidget {
   UserProvider userProvider;
-  DrawerSide({this.userProvider});
+  DrawerSide({super.key, required this.userProvider});
   @override
   _DrawerSideState createState() => _DrawerSideState();
 }
 
 class _DrawerSideState extends State<DrawerSide> {
-  Widget listTile({String title, IconData iconData, Function onTap}) {
+  Widget listTile(
+      {required String title,
+      required IconData iconData,
+      required Function onTap}) {
     return Container(
       height: 50,
       child: ListTile(
-        onTap: onTap,
+        onTap: () => print("Container pressed"),
         leading: Icon(
           iconData,
           size: 28,
@@ -49,14 +52,15 @@ class _DrawerSideState extends State<DrawerSide> {
                       backgroundColor: Colors.white54,
                       child: CircleAvatar(
                         backgroundColor: Colors.yellow,
+                        // leading:Image.asset('assets/logo.ico')
                         backgroundImage: NetworkImage(
                           userData.userImage ??
-                              "https://s3.envato.com/files/328957910/vegi_thumb.png",
+                              "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQM7WXW1khR0M28p7jssOQj6nU7c927Q4oaWQ&s",
                         ),
                         radius: 40,
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 20,
                     ),
                     Column(
@@ -102,14 +106,20 @@ class _DrawerSideState extends State<DrawerSide> {
               onTap: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(
-                    builder: (context) => MyProfile(userProvider:widget.userProvider),
+                    builder: (context) =>
+                        MyProfile(userProvider: widget.userProvider),
                   ),
                 );
               },
             ),
             listTile(
-                iconData: Icons.notifications_outlined, title: "Notificatio"),
-            listTile(iconData: Icons.star_outline, title: "Rating & Review"),
+                iconData: Icons.notifications_outlined,
+                title: "Notification",
+                onTap: () => {}),
+            listTile(
+                iconData: Icons.star_outline,
+                title: "Rating & Review",
+                onTap: () => {}),
             listTile(
                 iconData: Icons.favorite_outline,
                 title: "Wishlist",
@@ -120,12 +130,18 @@ class _DrawerSideState extends State<DrawerSide> {
                     ),
                   );
                 }),
-            listTile(iconData: Icons.copy_outlined, title: "Raise a Complaint"),
-            listTile(iconData: Icons.format_quote_outlined, title: "FAQs"),
+            listTile(
+                iconData: Icons.copy_outlined,
+                title: "Raise a Complaint",
+                onTap: () => {}),
+            listTile(
+                iconData: Icons.format_quote_outlined,
+                title: "FAQs",
+                onTap: () => {}),
             Container(
               height: 350,
-              padding: EdgeInsets.symmetric(horizontal: 20),
-              child: Column(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: const Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text("Contact Support"),

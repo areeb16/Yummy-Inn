@@ -1,132 +1,270 @@
 import 'package:flutter/material.dart';
+import 'package:food_app/config/colors.dart';
+import 'package:food_app/providers/product_provider.dart';
+import 'package:food_app/providers/user_provider.dart';
+import 'package:food_app/screens/product_overview/product_overview.dart';
+import 'package:food_app/screens/home/singal_product.dart';
+import 'package:food_app/screens/review_cart/review_cart.dart';
+import 'package:food_app/screens/search/search.dart';
+import 'package:provider/provider.dart';
+import 'drawer_side.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
-  Widget singalProduct() {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 10),
-      height: 300,
-      width: 170,
-      decoration: BoxDecoration(
-          color: const Color(0xffd9dad9),
-          borderRadius: BorderRadius.circular(10)),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Expanded(
-            flex: 2,
-            child: Image.network(
-                'https://png.pngtree.com/png-vector/20240130/ourmid/pngtree-carrot-png-with-ai-generated-png-image_11571969.png'),
-          ),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    'Fresh Carrot',
-                    style: TextStyle(
-                        color: Colors.black, fontWeight: FontWeight.bold),
-                  ),
-                  const Text(
-                    '80 PKR/50 Gram',
-                    style: TextStyle(
-                      color: Colors.grey,
+  @override
+  _HomeScreenState createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  late ProductProvider productProvider;
+
+  Widget _buildHerbsProduct(context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 20),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Text('Herbs Seasonings'),
+              GestureDetector(
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => Search(
+                        search: productProvider.getHerbsProductDataList,
+                      ),
                     ),
-                  ),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Container(
-                          padding: const EdgeInsets.only(left: 5),
-                          height: 30,
-                          width: 50,
-                          decoration: BoxDecoration(
-                              border: Border.all(color: Colors.grey),
-                              borderRadius: BorderRadius.circular(18)),
-                          child: const Row(
-                            children: [
-                              Expanded(
-                                child: Text('50gm',
-                                    style: TextStyle(fontSize: 12)),
-                              ),
-                              Center(
-                                child: Icon(
-                                  Icons.arrow_drop_up,
-                                  size: 20,
-                                  color: Colors.brown,
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 5,
-                      ),
-                      Expanded(
-                        child: Container(
-                          height: 30,
-                          width: 50,
-                          decoration: BoxDecoration(
-                              border: Border.all(color: Colors.grey),
-                              borderRadius: BorderRadius.circular(18)),
-                          child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                const Icon(
-                                  Icons.remove_circle_outline_rounded,
-                                  size: 18,
-                                  color: Colors.brown,
-                                ),
-                                Text(
-                                  '1',
-                                  style: TextStyle(
-                                      color: Colors.brown.shade700,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                const Icon(
-                                  Icons.add_box_outlined,
-                                  size: 18,
-                                  color: Colors.brown,
-                                ),
-                              ]),
-                        ),
-                      ),
-                    ],
-                  )
-                ],
+                  );
+                },
+                child: const Text(
+                  'view all',
+                  style: TextStyle(color: Colors.grey),
+                ),
               ),
-            ),
-          )
-        ],
-      ),
+            ],
+          ),
+        ),
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            children: productProvider.getHerbsProductDataList.map(
+              (herbsProductData) {
+                return SingalProduct(
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => ProductOverview(
+                          productId: herbsProductData.productId,
+                          productPrice: herbsProductData.productPrice,
+                          productName: herbsProductData.productName,
+                          productImage: herbsProductData.productImage,
+                        ),
+                      ),
+                    );
+                  },
+                  productId: herbsProductData.productId,
+                  productPrice: herbsProductData.productPrice,
+                  productImage: herbsProductData.productImage,
+                  productName: herbsProductData.productName,
+                  productUnit: herbsProductData,
+                );
+              },
+            ).toList(),
+            // children: [
+
+            // ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildFreshProduct(context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 20),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Text('Fresh Fruits'),
+              GestureDetector(
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => Search(
+                        search: productProvider.getFreshProductDataList,
+                      ),
+                    ),
+                  );
+                },
+                child: const Text(
+                  'view all',
+                  style: TextStyle(color: Colors.grey),
+                ),
+              ),
+            ],
+          ),
+        ),
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            children: productProvider.getFreshProductDataList.map(
+              (freshProductData) {
+                return SingalProduct(
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => ProductOverview(
+                          productId: freshProductData.productId,
+                          productImage: freshProductData.productImage,
+                          productName: freshProductData.productName,
+                          productPrice: freshProductData.productPrice,
+                        ),
+                      ),
+                    );
+                  },
+                  productId: freshProductData.productId,
+                  productImage: freshProductData.productImage,
+                  productName: freshProductData.productName,
+                  productPrice: freshProductData.productPrice,
+                  productUnit: freshProductData,
+                );
+              },
+            ).toList(),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildRootProduct() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 20),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Text('Root Vegetable'),
+              GestureDetector(
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => Search(
+                        search: productProvider.getRootProductDataList,
+                      ),
+                    ),
+                  );
+                },
+                child: const Text(
+                  'view all',
+                  style: TextStyle(color: Colors.grey),
+                ),
+              ),
+            ],
+          ),
+        ),
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            children: productProvider.getRootProductDataList.map(
+              (rootProductData) {
+                return SingalProduct(
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => ProductOverview(
+                          productId: rootProductData.productId,
+                          productImage: rootProductData.productImage,
+                          productName: rootProductData.productName,
+                          productPrice: rootProductData.productPrice,
+                        ),
+                      ),
+                    );
+                  },
+                  productId: rootProductData.productId,
+                  productImage: rootProductData.productImage,
+                  productName: rootProductData.productName,
+                  productPrice: rootProductData.productPrice,
+                  productUnit: rootProductData,
+                );
+              },
+            ).toList(),
+          ),
+        ),
+      ],
     );
   }
 
   @override
+  void initState() {
+    ProductProvider initproductProvider = Provider.of(context, listen: false);
+    initproductProvider.fatchHerbsProductData();
+    initproductProvider.fatchFreshProductData();
+    initproductProvider.fatchRootProductData();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    productProvider = Provider.of(context);
+    UserProvider userProvider = Provider.of(context);
+    userProvider.getUserData();
     return Scaffold(
-      backgroundColor: const Color(0xffcbcbcb),
-      drawer: const Drawer(),
+      drawer: DrawerSide(
+        userProvider: userProvider,
+      ),
       appBar: AppBar(
-        iconTheme: const IconThemeData(color: Colors.black),
-        title: const Text('Home',
-            style: TextStyle(color: Colors.black, fontSize: 18)),
+        iconTheme: IconThemeData(color: textColor),
+        title: Text(
+          'Home',
+          style: TextStyle(color: textColor, fontSize: 17),
+        ),
         actions: [
           CircleAvatar(
-            radius: 12,
-            backgroundColor: Colors.brown.shade300,
-            child: const Icon(Icons.search, size: 17, color: Colors.black),
+            radius: 15,
+            backgroundColor: const Color(0xffd6d382),
+            child: IconButton(
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) =>
+                        Search(search: productProvider.gerAllProductSearch),
+                  ),
+                );
+              },
+              icon: Icon(
+                Icons.search,
+                size: 17,
+                color: textColor,
+              ),
+            ),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 5),
-            child: CircleAvatar(
-              radius: 12,
-              backgroundColor: Colors.brown.shade300,
-              child: const Icon(Icons.shop_2, size: 17, color: Colors.black),
+            child: GestureDetector(
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => ReviewCart(),
+                  ),
+                );
+              },
+              child: CircleAvatar(
+                backgroundColor: const Color(0xffd6d382),
+                radius: 15,
+                child: Icon(
+                  Icons.shop,
+                  size: 17,
+                  color: textColor,
+                ),
+              ),
             ),
           ),
         ],
@@ -140,10 +278,11 @@ class HomeScreen extends StatelessWidget {
               height: 150,
               decoration: BoxDecoration(
                 image: const DecorationImage(
-                    fit: BoxFit.cover,
-                    opacity: 0.8,
-                    image: AssetImage('assets/home.jpg')),
-                // color: Colors.red,
+                  fit: BoxFit.cover,
+                  image: NetworkImage(
+                      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQi0Xg-k622Sbztlrb-L1o1CAla3zCbVc2lUw&usqp=CAU'),
+                ),
+                color: Colors.red,
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Row(
@@ -154,31 +293,29 @@ class HomeScreen extends StatelessWidget {
                       child: Column(
                         children: [
                           Padding(
-                            padding: const EdgeInsets.only(
-                              right: 200,
-                              bottom: 10,
-                            ),
+                            padding:
+                                const EdgeInsets.only(right: 130, bottom: 10),
                             child: Container(
                               height: 50,
-                              width: 89,
-                              decoration: BoxDecoration(
-                                  color: Colors.brown.shade700,
-                                  borderRadius: const BorderRadius.only(
-                                    bottomRight: Radius.circular(30),
-                                    bottomLeft: Radius.circular(30),
-                                  )),
-                              child: Center(
+                              width: 100,
+                              decoration: const BoxDecoration(
+                                color: Color(0xffd1ad17),
+                                borderRadius: BorderRadius.only(
+                                  bottomRight: Radius.circular(50),
+                                  bottomLeft: Radius.circular(50),
+                                ),
+                              ),
+                              child: const Center(
                                 child: Text(
-                                  'Yummy Inn',
+                                  'Vegi',
                                   style: TextStyle(
-                                    fontSize: 15,
+                                    fontSize: 20,
                                     color: Colors.white,
                                     shadows: [
                                       BoxShadow(
-                                        color: Colors.brown.shade700,
-                                        blurRadius: 10,
-                                        offset: const Offset(2, 2),
-                                      )
+                                          color: Colors.green,
+                                          blurRadius: 10,
+                                          offset: Offset(3, 3))
                                     ],
                                   ),
                                 ),
@@ -188,18 +325,16 @@ class HomeScreen extends StatelessWidget {
                           Text(
                             '30% Off',
                             style: TextStyle(
-                              fontSize: 40,
-                              color: Colors.brown.shade900,
-                              fontWeight: FontWeight.bold,
-                            ),
+                                fontSize: 40,
+                                color: Colors.green[100],
+                                fontWeight: FontWeight.bold),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 10),
+                          const Padding(
+                            padding: EdgeInsets.only(left: 20),
                             child: Text(
-                              'on all vegetable products',
+                              'On all vegetables products',
                               style: TextStyle(
-                                color: Colors.brown.shade900,
-                                fontWeight: FontWeight.w600,
+                                color: Colors.white,
                               ),
                             ),
                           ),
@@ -207,67 +342,15 @@ class HomeScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                ],
-              ),
-            ),
-            const Padding(
-              padding: EdgeInsets.symmetric(vertical: 5),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Herbs Seasonings',
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                  Text(
-                    'View All',
-                    style: TextStyle(color: Colors.grey),
+                  Expanded(
+                    child: Container(),
                   ),
                 ],
               ),
             ),
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                children: [
-                  singalProduct(),
-                  singalProduct(),
-                  singalProduct(),
-                  singalProduct(),
-                  singalProduct(),
-                  singalProduct(),
-                ],
-              ),
-            ),
-            const Padding(
-              padding: EdgeInsets.symmetric(vertical: 5),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Fresh Fruits',
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                  Text(
-                    'View All',
-                    style: TextStyle(color: Colors.grey),
-                  ),
-                ],
-              ),
-            ),
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                children: [
-                  singalProduct(),
-                  singalProduct(),
-                  singalProduct(),
-                  singalProduct(),
-                  singalProduct(),
-                  singalProduct(),
-                ],
-              ),
-            ),
+            _buildHerbsProduct(context),
+            _buildFreshProduct(context),
+            _buildRootProduct(),
           ],
         ),
       ),
