@@ -6,6 +6,8 @@ import 'package:food_app/widgets/costom_text_field.dart';
 import 'package:provider/provider.dart';
 
 class AddDeliverAddress extends StatefulWidget {
+  const AddDeliverAddress({super.key});
+
   @override
   _AddDeliverAddressState createState() => _AddDeliverAddressState();
 }
@@ -62,42 +64,52 @@ class _AddDeliverAddressState extends State<AddDeliverAddress> {
             CostomTextField(
               labText: "First name",
               controller: checkoutProvider.firstName,
+              keyboardType: TextInputType.name,
             ),
             CostomTextField(
               labText: "Last name",
               controller: checkoutProvider.lastName,
+              keyboardType: TextInputType.name,
             ),
             CostomTextField(
               labText: "Mobile No",
               controller: checkoutProvider.mobileNo,
+              keyboardType: TextInputType.number,
             ),
             CostomTextField(
               labText: "Alternate Mobile No",
               controller: checkoutProvider.alternateMobileNo,
+              keyboardType: TextInputType.number,
             ),
             CostomTextField(
               labText: "Scoiety",
               controller: checkoutProvider.scoiety,
+              keyboardType: TextInputType.name,
             ),
             CostomTextField(
               labText: "Street",
               controller: checkoutProvider.street,
+              keyboardType: TextInputType.number,
             ),
             CostomTextField(
               labText: "Landmark",
               controller: checkoutProvider.landmark,
+              keyboardType: TextInputType.name,
             ),
             CostomTextField(
               labText: "City",
               controller: checkoutProvider.city,
+              keyboardType: TextInputType.name,
             ),
             CostomTextField(
               labText: "Aera",
               controller: checkoutProvider.aera,
+              keyboardType: TextInputType.name,
             ),
             CostomTextField(
               labText: "Pincode",
               controller: checkoutProvider.pincode,
+              keyboardType: TextInputType.number,
             ),
             InkWell(
               onTap: () {

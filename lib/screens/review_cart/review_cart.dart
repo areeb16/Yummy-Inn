@@ -3,7 +3,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:food_app/config/colors.dart';
 import 'package:food_app/models/review_cart_model.dart';
 import 'package:food_app/providers/review_cart_provider.dart';
-import 'package:food_app/screens/chect_out/delivery_details/delivery_details.dart';
+import 'package:food_app/screens/check_out/delivery_details/delivery_details.dart';
 import 'package:food_app/widgets/single_item.dart';
 import 'package:provider/provider.dart';
 

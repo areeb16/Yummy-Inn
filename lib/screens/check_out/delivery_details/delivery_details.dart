@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:food_app/config/colors.dart';
 import 'package:food_app/models/delivery_address_model.dart';
 import 'package:food_app/providers/check_out_provider.dart';
-import 'package:food_app/screens/check_out/delivery_details/single_delivery_item.dart';
+import 'package:food_app/screens/check_out/delivery_details/single_delivery_items.dart';
 import 'package:food_app/screens/check_out/payment_summary/payment_summary.dart';
-import 'package:food_app/screens/chect_out/add_delivery_address/add_delivery_address.dart';
+import 'package:food_app/screens/check_out/add_delivery_address/add_delivery_address.dart';
 import 'package:provider/provider.dart';
 
 class DeliveryDetails extends StatefulWidget {
@@ -13,7 +13,7 @@ class DeliveryDetails extends StatefulWidget {
 }
 
 class _DeliveryDetailsState extends State<DeliveryDetails> {
-  DeliveryAddressModel value;
+  late DeliveryAddressModel value;
   @override
   Widget build(BuildContext context) {
     CheckoutProvider deliveryAddressProvider = Provider.of(context);
@@ -28,7 +28,7 @@ class _DeliveryDetailsState extends State<DeliveryDetails> {
         onPressed: () {
           Navigator.of(context).push(
             MaterialPageRoute(
-              builder: (context) => AddDeliverAddress(),
+              builder: (context) => const AddDeliverAddress(),
             ),
           );
         },
@@ -45,7 +45,7 @@ class _DeliveryDetailsState extends State<DeliveryDetails> {
             deliveryAddressProvider.getDeliveryAddressList.isEmpty
                 ? Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) => AddDeliverAddress(),
+                      builder: (context) => const AddDeliverAddress(),
                     ),
                   )
                 : Navigator.of(context).push(
